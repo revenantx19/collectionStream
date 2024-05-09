@@ -1,5 +1,7 @@
 package com.collections.stream;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -25,11 +27,15 @@ public class EmployeeServiceImp implements EmployeeService {
 
     public String addEmployee(String fio, int dep, int salary) {
         if (employeesMap.get(fio) == null) {
-            employeesMap.put(fio, new Employee(fio, dep, salary));
+            if (fio.replaceAll("[^ a-zA-Zа-яА-Я]", "").length() == fio.length()) {
+                employeesMap.put(WordUtils.capitalizeFully(fio), new Employee(WordUtils.capitalizeFully(fio), dep, salary));
+                return WordUtils.capitalizeFully(fio) + " сотрудник успешно добавлен";
+            } else {
+                throw new RuntimeException();
+            }
         } else {
             return "Сотрудник уже имеется в базе";
         }
-        return fio + " сотрудник успешно добавлен";
     }
 
     public String findEmployee(String fio) {
