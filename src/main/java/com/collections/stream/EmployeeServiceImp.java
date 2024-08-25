@@ -24,7 +24,7 @@ public class EmployeeServiceImp implements EmployeeService {
             "Безруков Степан", new Employee("Безруков Степан", 5, 55000)
     )
     );
-
+    //При добавлении проверяется регистр и наличие недопустимых символов
     public String addEmployee(String fio, int dep, int salary) {
         if (employeesMap.get(fio) == null) {
             if (fio.replaceAll("[^ a-zA-Zа-яА-Я]", "").length() == fio.length()) {
